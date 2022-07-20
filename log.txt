@@ -28,3 +28,57 @@ Timestamp: Tue Jul 19 2022 17:21:00 GMT+0200 (Central European Summer Time)
 URL: /favicon.ico
 Timestamp: Tue Jul 19 2022 17:21:00 GMT+0200 (Central European Summer Time)
 
+URL: /
+Timestamp: Tue Jul 19 2022 17:59:00 GMT+0200 (Central European Summer Time)
+
+URL: /css/styles.css
+Timestamp: Tue Jul 19 2022 17:59:00 GMT+0200 (Central European Summer Time)
+
+URL: /image/pokemon-logo.png
+Timestamp: Tue Jul 19 2022 17:59:01 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Tue Jul 19 2022 18:00:02 GMT+0200 (Central European Summer Time)
+
+URL: /css/styles.css
+Timestamp: Tue Jul 19 2022 18:00:02 GMT+0200 (Central European Summer Time)
+
+URL: /image/pokemon-logo.png
+Timestamp: Tue Jul 19 2022 18:00:02 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Tue Jul 19 2022 18:00:32 GMT+0200 (Central European Summer Time)
+
+URL: /css/styles.css
+Timestamp: Tue Jul 19 2022 18:00:32 GMT+0200 (Central European Summer Time)
+
+URL: /image/pokemon-logo.png
+Timestamp: Tue Jul 19 2022 18:00:32 GMT+0200 (Central European Summer Time)
+
+URL: /
+Timestamp: Tue Jul 19 2022 18:00:33 GMT+0200 (Central European Summer Time)
+
+URL: /css/styles.css
+Timestamp: Tue Jul 19 2022 18:00:33 GMT+0200 (Central European Summer Time)
+
+URL: /image/pokemon-logo.png
+Timestamp: Tue Jul 19 2022 18:00:33 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Tue Jul 19 2022 18:00:40 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Tue Jul 19 2022 18:00:40 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Tue Jul 19 2022 18:01:16 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Tue Jul 19 2022 18:01:16 GMT+0200 (Central European Summer Time)
+
+URL: /docu
+Timestamp: Tue Jul 19 2022 18:01:22 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Tue Jul 19 2022 18:01:22 GMT+0200 (Central European Summer Time)
+
