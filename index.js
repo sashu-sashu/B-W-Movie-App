@@ -1,5 +1,26 @@
 const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
+
+// error handler
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
+app.use(methodOverride());
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+app.use(morgan('common'));
+
 
 let topMovies = [
     {
@@ -68,15 +89,21 @@ let topMovies = [
 
 // GET requests
 app.get('/', (req, res) => {
-  res.send('Welcome to my movie club!');
+  let responseText = 'Welcome to my Movies app!';
+  responseText += '<small>Requested at: ' + req.requestTime + '</small>';
+  res.send(responseText);
 });
 
 app.get('/movies', (req, res) => {                  
   res.sendFile('public/movies.html', { root: __dirname });
 });
 
+app.get('/documentation', (req, res) => {                  
+  res.sendFile('public/documentation.html', { root: __dirname });
+});
+
 // function for static files
-// this syntax does not
+// this syntax does not work
 //app.use('/documentation', express.static('public'));
 
 // listen for requests
