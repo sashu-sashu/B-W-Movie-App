@@ -82,3 +82,21 @@ Timestamp: Tue Jul 19 2022 18:01:22 GMT+0200 (Central European Summer Time)
 URL: /favicon.ico
 Timestamp: Tue Jul 19 2022 18:01:22 GMT+0200 (Central European Summer Time)
 
+URL: /
+Timestamp: Sun Jul 24 2022 12:15:09 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun Jul 24 2022 12:15:09 GMT+0200 (Central European Summer Time)
+
+URL: /movies
+Timestamp: Sun Jul 24 2022 12:15:17 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun Jul 24 2022 12:15:17 GMT+0200 (Central European Summer Time)
+
+URL: /movies
+Timestamp: Sun Jul 24 2022 12:15:22 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun Jul 24 2022 12:15:22 GMT+0200 (Central European Summer Time)
+
