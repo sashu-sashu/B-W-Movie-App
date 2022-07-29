@@ -1,0 +1,73 @@
+[
+    {
+        "title": "Coffee and Cigarettes",
+        "director": "Jim Jarmusch",
+        "year": "2003",
+        "duration": "96 min",
+        "genre":"horror"
+    },
+    {
+        "title": "Schindler/’s List",
+        "director": "J.R.R. Tolkien",
+        "year": "1993",
+        "duration": "195 min",
+        "genre":"horror"
+    },
+    {
+        "title": "Metropolis",
+        "director": "Fritz Lang",
+        "year": "1926",
+        "duration": "109 min",
+        "genre":"horror"
+    },
+    {
+        "title": "Psycho",
+        "director": "Alfred Hitchcock",
+        "year": "1960",
+        "duration": "109 min",
+        "genre":"horror"
+    },
+    {
+        "title": "To Kill A Mockingbird",
+        "director": "Robert Mulligan",
+        "year": "1962",
+        "duration": "129 min",
+        "genre":"horror"
+    },
+    {
+        "title": "All About Eve",
+        "director": "Joseph L. Mankiewicz",
+        "year": "1950",
+        "duration": "138 min",
+        "genre":"horror"
+    },
+    {
+        "title": "Casablanca",
+        "director": "Starring Humphrey Bogart and Ingrid Bergman",
+        "year": "1942",
+        "duration": "102 min",
+        "genre":"horror"
+    },
+    {
+        "title": "The Seventh Seal",
+        "director": "Ingmar Bergman",
+        "year": "1957",
+        "duration": "2 h",
+        "genre":"horror"
+    },
+    {
+        "title": "Modern Times",
+        "director": "Charles Chaplin",
+        "year": "1936",
+        "duration": "87 min",
+        "genre":"horror"
+    },
+    {
+        "title": "8½",
+        "director": "Federico Fellini",
+        "year": "1963",
+        "duration": "138 min",
+        "genre":"horror"
+        }
+]
+    
