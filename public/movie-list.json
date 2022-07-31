@@ -1,0 +1,123 @@
+[
+    {
+        "title": "Coffee and Cigarettes",
+        "description" : "-",
+        "director": {
+            "Name" : "Jim Jarmusch",
+            "Bio" : "-"
+        },
+        "year": "2003",
+        "duration": "96 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "Schindler/’s List",
+        "description" : "-",
+        "director": {
+            "Name" : "J.R.R. Tolkien",
+            "Bio" : "-"
+        },
+        "year": "1993",
+        "duration": "195 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "Metropolis",
+        "description" : "-",
+        "director": {
+            "Name" : "Fritz Lang",
+            "Bio" : "-"
+        },
+        "year": "1926",
+        "duration": "109 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "Psycho",
+        "description" : "-",
+        "director": {
+            "Name" : "Alfred Hitchcock",
+            "Bio" : "-"
+        },
+        "year": "1960",
+        "duration": "109 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "To Kill A Mockingbird",
+        "description" : "-",
+        "director": {
+            "Name" : "Robert Mulligan",
+            "Bio" : "-"
+        },
+        "year": "1962",
+        "duration": "129 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "All About Eve",
+        "description" : "-",
+        "director": {
+            "Name" : "Joseph L. Mankiewicz",
+            "Bio" : "-"
+        },
+        "year": "1950",
+        "duration": "138 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "Casablanca",
+        "description" : "-",
+        "director": {
+            "Name" : "Starring Humphrey Bogart and Ingrid Bergman",
+            "Bio" : "-"
+        },
+        "year": "1942",
+        "duration": "102 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "The Seventh Seal",
+        "description" : "-",
+        "director": {
+            "Name" : "Ingmar Bergman",
+            "Bio" : "-"
+        },
+        "year": "1957",
+        "duration": "2 h",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "Modern Times",
+        "description" : "-",
+        "director": {
+            "Name" : "Charles Chaplin",
+            "Bio" : "-"
+        },
+        "year": "1936",
+        "duration": "87 min",
+        "genre":"horror",
+        "ImageURL" : ""
+    },
+    {
+        "title": "8½",
+        "description" : "-",
+        "director": {
+            "Name" : "Federico Fellini",
+            "Bio" : "-"
+        },
+        "year": "1963",
+        "duration": "138 min",
+        "genre":"horror",
+        "ImageURL" : ""
+        }
+]
+    

@@ -8,6 +8,29 @@
 </head>
 <body>
     <h1>B&W Movie Web Application</h1>
-    <p>main task is to build the server-side component of a b&W movies web application which will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>         
+    <p>main task is to build the server-side component of a b&W movies web application which will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+    <h3>Movies API</h3>
+    <dl>
+        <dt>Get method</dt>
+        <dd>
+            <ul>
+                <li>Endpoint: http://localhost:8080/api/movies-list</li>
+                <li>Response:
+                    <pre>
+                        [
+                            {
+                                "title": "Coffee and Cigarettes",
+                                "director": "Jim Jarmusch",
+                                "year": "2003",
+                                "duration": "96 min",
+                                "genre":"horror"
+                            },
+                            ...
+                        ]
+                    </pre>
+                </li>
+            </ul>
+        </dd>
+    </dl>        
 </body>
 </html>
