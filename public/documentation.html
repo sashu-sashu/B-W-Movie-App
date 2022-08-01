@@ -1,13 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><<<<
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
     <h1>B&W Movie Web Application</h1>
-    <p>main task is to build the server-side component of a b&W movies web application which will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>         
+    <p>main task is to build the server-side component of a b&W movies web application which will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+    <h3>Movies API</h3>
+    <dl>
+        <dt>JSON file with an Array</dt>
+        <dd>
+            <ul>
+                <li>Data of the movies-list</li>
+                <li>The endpoint URL:</li>
+                <li>Example code:
+                    <pre>
+                        [
+                            {
+                                "title": "Coffee and Cigarettes",
+                                "director": "Jim Jarmusch",
+                                "year": "2003",
+                                "duration": "96 min",
+                                "genre":"horror"
+                            },
+                            ...
+                        ]
+                    </pre>
+                </li>
+            </ul>
+        </dd>        
+        <dt>GET method</dt>
+        <dd>
+            <ul>        
+                <li>Return a list of ALL movies to the user</li>
+                <li>The endpoint URL: http://localhost:8080/movieList</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/api/movies-list', (req, res)=> {
+                            res.json(movieList);
+                          });
+                    </pre>
+                </li>
+                <li>Return data about a genre by name/title</li>
+                <li>The endpoint URL: http://localhost:8080/movieList/genre/drama</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/movieList/genre/:genreName', (req, res) => {
+                            const {genreName} = req.params;
+                            const genre = movieList.find( movie => movie.genre === genreName).genre;
+                          
+                            if (genre) {
+                              res.status(200).json(genre);
+                            } else {
+                              res.status(400).send('Genre not found');
+                            }
+                        });
+                    </pre>
+                </li>
+                <li>Return data about a single movie by title to the user</li>
+                <li>The endpoint URL:</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/movieList/:title', (req, res) => {
+                            const {title} = req.params;
+                            const movie = movieList.find( movie => movie.Title === title);
+                          
+                            if (movie) {
+                              res.status(200).json(movie);
+                            } else {
+                              res.status(400).send('Movie not found');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Return data about a director by name</li>
+                <li>The endpoint URL: http://localhost:8080/movieList/directors/Fritz%20Lang</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/movieList/directors/:directorName', (req, res) => {
+                            const {directorName} = req.params;
+                            const director = movieList.find( movie => movie.Director.Name === directorName).Director;
+                          
+                            if (director) {
+                              res.status(200).json(director);
+                            } else {
+                              res.status(400).send('Director not found');
+                            }
+                          });
+                    </pre>
+            </ul>
+        </dd>        
+        <dt>POST method</dt>
+        <dd>
+            <ul>        
+                </li>
+                <li>Allow new users to register. Return data about a new user with an id.</li>
+                <li>The endpoint URL: http://localhost:8080/users</li>
+                <li>Example code:
+                    <pre>
+                        app.post('/users', (req, res) => {
+                            const newUser = req.body;
+                          
+                            if (newUser.name) {
+                              newUser.id = uuid.v4();
+                              users.push(newUser);
+                              res.status(201).json(newUser);
+                            } else {
+                              res.status(400).send('Users need names!');
+                            }
+                          });
+                    </pre>
+                </li>    
+                <li>Allow users to add a movie to their list of favorites. Return only a text that a movie has been added.</li>
+                <li>The endpoint URL: http://localhost:8080/users/2/Casablanca</li>
+                <li>Example code:
+                    <pre>
+                        app.post('/users/:id/:movieTitle', (req, res) => {
+                            const { id, movieTitle } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.favoriteMovies.push(movieTitle);
+                              res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>    
+            </ul>
+        </dd>        
+         <dt>PUT method</dt>
+        <dd>
+            <ul>        
+                </li>
+                <li>Allow users to update their user info (username). Return an updated user name.</li>
+                <li>The endpoint URL: http://localhost:8080/users/1</li>
+                <li>Example code:
+                    <pre>
+                        app.put('/users/:id', (req, res) => {
+                            const { id } = req.params;
+                            const updatedUser = req.body;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.name = updatedUser.name;
+                              res.status(200).json(user);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+            </ul>    
+        </dd>        
+        <dt>DELETE method</dt>
+        <dd>
+            <ul>        
+                <li>Allow users to remove a movie from their list of favorites. Return only a text that a movie has been deleted.</li>
+                <li>The endpoint URL: http://localhost:8080/users/1/Psycho</li>
+                <li>Example code:
+                    <pre>
+                        app.delete('/users/:id/:movieTitle', (req, res) => {
+                            const { id, movieTitle } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
+                              res.status(200).send(`${movieTitle} has been Removed from ${user.name}'s array`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow existing users to deregister. Return only a text that a user has been deleted</li>
+                <li>The endpoint URL: http://localhost:8080/users/1</li>
+                <li>Example code:
+                    <pre>
+                        app.delete('/users/:id/', (req, res) => {
+                            const { id } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              users= users.filter( user => user.id != id);
+                              res.status(200).send(`${user.name}'s account has been deleted!`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+            </ul>
+        </dd>
+    </dl>        
 </body>
 </html>
