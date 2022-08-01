@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"><<<<
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -11,7 +11,7 @@
     <p>main task is to build the server-side component of a b&W movies web application which will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
     <h3>Movies API</h3>
     <dl>
-        <dt>Get method</dt>
+        <dt>JSON Array</dt>
         <dd>
             <ul>
                 <li>Endpoint: movies-list</li>
@@ -29,6 +29,11 @@
                         ]
                     </pre>
                 </li>
+            </ul>
+        </dd>        
+        <dt>GET method</dt>
+        <dd>
+            <ul>        
                 <li>Return a list of ALL movies to the user</li>
                 <li>Example code:
                     <pre>
@@ -66,6 +71,11 @@
                             }
                           });
                     </pre>
+            </ul>
+        </dd>        
+        <dt>POST method</dt>
+        <dd>
+            <ul>        
                 </li>
                 <li>Allow new users to register</li>
                 <li>Example code:
@@ -82,6 +92,29 @@
                             }
                           });
                     </pre>
+                </li>    
+                <li>Allow users to add a movie to their list of favorites</li>
+                <li>Example code:
+                    <pre>
+                        app.post('/users/:id/:movieTitle', (req, res) => {
+                            const { id, movieTitle } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.favoriteMovies.push(movieTitle);
+                              res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>    
+            </ul>
+        </dd>        
+         <dt>PUT method</dt>
+        <dd>
+            <ul>        
                 </li>
                 <li>Allow users to update their user info (username)</li>
                 <li>Example code:
@@ -101,23 +134,11 @@
                           });
                     </pre>
                 </li>
-                <li>Allow users to add a movie to their list of favorites</li>
-                <li>Example code:
-                    <pre>
-                        app.post('/users/:id/:movieTitle', (req, res) => {
-                            const { id, movieTitle } = req.params;
-                          
-                            let user = users.find( user => user.id == id ); //search user by id
-                          
-                            if (user) {
-                              user.favoriteMovies.push(movieTitle);
-                              res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
-                            } else {
-                              res.status(400).send('No such user found!');
-                            }
-                          });
-                    </pre>
-                </li>
+            </ul>    
+        </dd>        
+        <dt>DELETE method</dt>
+        <dd>
+            <ul>        
                 <li>Allow users to remove a movie from their list of favorites</li>
                 <li>Example code:
                     <pre>
@@ -152,7 +173,6 @@
                           });
                     </pre>
                 </li>
-
             </ul>
         </dd>
     </dl>        
