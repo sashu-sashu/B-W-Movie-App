@@ -3,8 +3,8 @@
         "title": "Coffee and Cigarettes",
         "description" : "-",
         "director": {
-            "Name" : "Jim Jarmusch",
-            "Bio" : "-"
+            "name" : "Jim Jarmusch",
+            "bio" : "-"
         },
         "year": "2003",
         "duration": "96 min",
@@ -15,8 +15,8 @@
         "title": "Schindler/’s List",
         "description" : "-",
         "director": {
-            "Name" : "J.R.R. Tolkien",
-            "Bio" : "-"
+            "name" : "J.R.R. Tolkien",
+            "bio" : "-"
         },
         "year": "1993",
         "duration": "195 min",
@@ -27,8 +27,8 @@
         "title": "Metropolis",
         "description" : "-",
         "director": {
-            "Name" : "Fritz Lang",
-            "Bio" : "-"
+            "name" : "Fritz Lang",
+            "bio" : "-"
         },
         "year": "1926",
         "duration": "109 min",
@@ -39,8 +39,8 @@
         "title": "Psycho",
         "description" : "-",
         "director": {
-            "Name" : "Alfred Hitchcock",
-            "Bio" : "-"
+            "name" : "Alfred Hitchcock",
+            "bio" : "-"
         },
         "year": "1960",
         "duration": "109 min",
@@ -51,8 +51,8 @@
         "title": "To Kill A Mockingbird",
         "description" : "-",
         "director": {
-            "Name" : "Robert Mulligan",
-            "Bio" : "-"
+            "name" : "Robert Mulligan",
+            "bio" : "-"
         },
         "year": "1962",
         "duration": "129 min",
@@ -63,8 +63,8 @@
         "title": "All About Eve",
         "description" : "-",
         "director": {
-            "Name" : "Joseph L. Mankiewicz",
-            "Bio" : "-"
+            "name" : "Joseph L. Mankiewicz",
+            "bio" : "-"
         },
         "year": "1950",
         "duration": "138 min",
@@ -75,8 +75,8 @@
         "title": "Casablanca",
         "description" : "-",
         "director": {
-            "Name" : "Starring Humphrey Bogart and Ingrid Bergman",
-            "Bio" : "-"
+            "name" : "Starring Humphrey Bogart and Ingrid Bergman",
+            "bio" : "-"
         },
         "year": "1942",
         "duration": "102 min",
@@ -87,8 +87,8 @@
         "title": "The Seventh Seal",
         "description" : "-",
         "director": {
-            "Name" : "Ingmar Bergman",
-            "Bio" : "-"
+            "name" : "Ingmar Bergman",
+            "bio" : "-"
         },
         "year": "1957",
         "duration": "2 h",
@@ -99,8 +99,8 @@
         "title": "Modern Times",
         "description" : "-",
         "director": {
-            "Name" : "Charles Chaplin",
-            "Bio" : "-"
+            "name" : "Charles Chaplin",
+            "bio" : "-"
         },
         "year": "1936",
         "duration": "87 min",
@@ -111,8 +111,8 @@
         "title": "8½",
         "description" : "-",
         "director": {
-            "Name" : "Federico Fellini",
-            "Bio" : "-"
+            "name" : "Federico Fellini",
+            "bio" : "-"
         },
         "year": "1963",
         "duration": "138 min",

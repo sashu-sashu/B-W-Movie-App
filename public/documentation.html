@@ -14,8 +14,8 @@
         <dt>Get method</dt>
         <dd>
             <ul>
-                <li>Endpoint: http://localhost:8080/api/movies-list</li>
-                <li>Response:
+                <li>Endpoint: movies-list</li>
+                <li>Example code:
                     <pre>
                         [
                             {
@@ -29,6 +29,130 @@
                         ]
                     </pre>
                 </li>
+                <li>Return a list of ALL movies to the user</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/api/movies-list', (req, res)=> {
+                            res.json(movieList);
+                          });
+                    </pre>
+                </li>
+                <li>Return data about a single movie by title to the user</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/movieList/:title', (req, res) => {
+                            const {title} = req.params;
+                            const movie = movieList.find( movie => movie.Title === title);
+                          
+                            if (movie) {
+                              res.status(200).json(movie);
+                            } else {
+                              res.status(400).send('Movie not found');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Return data about a director by name</li>
+                <li>Example code:
+                    <pre>
+                        app.get('/movieList/directors/:directorName', (req, res) => {
+                            const {directorName} = req.params;
+                            const director = movieList.find( movie => movie.Director.Name === directorName).Director;
+                          
+                            if (director) {
+                              res.status(200).json(director);
+                            } else {
+                              res.status(400).send('Director not found');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow new users to register</li>
+                <li>Example code:
+                    <pre>
+                        app.post('/users', (req, res) => {
+                            const newUser = req.body;
+                          
+                            if (newUser.name) {
+                              newUser.id = uuid.v4();
+                              users.push(newUser);
+                              res.status(201).json(newUser);
+                            } else {
+                              res.status(400).send('Users need names!');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow users to update their user info (username)</li>
+                <li>Example code:
+                    <pre>
+                        app.put('/users/:id', (req, res) => {
+                            const { id } = req.params;
+                            const updatedUser = req.body;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.name = updatedUser.name;
+                              res.status(200).json(user);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow users to add a movie to their list of favorites</li>
+                <li>Example code:
+                    <pre>
+                        app.post('/users/:id/:movieTitle', (req, res) => {
+                            const { id, movieTitle } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.favoriteMovies.push(movieTitle);
+                              res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow users to remove a movie from their list of favorites</li>
+                <li>Example code:
+                    <pre>
+                        app.delete('/users/:id/:movieTitle', (req, res) => {
+                            const { id, movieTitle } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
+                              res.status(200).send(`${movieTitle} has been Removed from ${user.name}'s array`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+                <li>Allow existing users to deregister</li>
+                <li>Example code:
+                    <pre>
+                        app.delete('/users/:id/', (req, res) => {
+                            const { id } = req.params;
+                          
+                            let user = users.find( user => user.id == id ); //search user by id
+                          
+                            if (user) {
+                              users= users.filter( user => user.id != id);
+                              res.status(200).send(`${user.name}'s account has been deleted!`);
+                            } else {
+                              res.status(400).send('No such user found!');
+                            }
+                          });
+                    </pre>
+                </li>
+
             </ul>
         </dd>
     </dl>        
