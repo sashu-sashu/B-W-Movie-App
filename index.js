@@ -21,7 +21,7 @@ let users = [
   {
     id: 2,
     name: "Ada",
-    favoriteMovies: ["Casablanca"]
+    favoriteMovies: []
   }
 ]  
 
@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 
 app.use(morgan('common'));
 
-// Add new user
+// CREATE new user
 app.post('/users', (req, res) => {
   const newUser = req.body;
 
@@ -48,7 +48,7 @@ app.post('/users', (req, res) => {
   }
 });
 
-// Update user name
+// UPDATE user name
 app.put('/users/:id', (req, res) => {
   const { id } = req.params;
   const updatedUser = req.body;
@@ -71,7 +71,8 @@ app.delete('/users/:id/', (req, res) => {
 
   if (user) {
     users= users.filter( user => user.id != id);
-    res.status(200).send(`${user.name}'s account has been deleted!`);
+    res.json(users)
+    //res.status(200).send(`${user.name}'s account has been deleted!`);
   } else {
     res.status(400).send('No such user found!');
   }
@@ -85,18 +86,18 @@ app.get('/', (req, res) => {
   res.send(responseText);
 });
 
-app.get('/movies', (req, res) => {                  
-  res.sendFile('public/movies.html', { root: __dirname });
+app.get('/movie-list', (req, res) => {                  
+  res.sendFile('public/movie-list.html', { root: __dirname });
 });
 
 // movies API
-app.get('/api/movies-list', (req, res)=> {
+app.get('/movieList', (req, res)=> {
   res.json(movieList);
 });
 
 app.get('/movieList/:title', (req, res) => {
   const {title} = req.params;
-  const movie = movieList.find( movie => movie.Title === title);
+  const movie = movieList.find( movie => movie.title === title);
 
   if (movie) {
     res.status(200).json(movie);
@@ -107,7 +108,7 @@ app.get('/movieList/:title', (req, res) => {
 
 app.get('/movieList/genre/:genreName', (req, res) => {
   const {genreName} = req.params;
-  const genre = movieList.find( movie => movie.Genre.Name === genreName).Genre;
+  const genre = movieList.find( movie => movie.genre === genreName).genre;
 
   if (genre) {
     res.status(200).json(genre);
@@ -118,7 +119,7 @@ app.get('/movieList/genre/:genreName', (req, res) => {
 
 app.get('/movieList/directors/:directorName', (req, res) => {
   const {directorName} = req.params;
-  const director = movieList.find( movie => movie.Director.Name === directorName).Director;
+  const director = movieList.find( movie => movie.director.name === directorName).director;
 
   if (director) {
     res.status(200).json(director);
@@ -127,6 +128,7 @@ app.get('/movieList/directors/:directorName', (req, res) => {
   }
 });
 
+//CREATE
 app.post('/api/movieList', (req, res) => {
   let newMovie = req.body;
 
@@ -141,7 +143,7 @@ app.post('/api/movieList', (req, res) => {
   }
 });
 
-// Add new movie to favorite movies array
+// Create. Add new movie to favorite movies array
 app.post('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params;
 
@@ -149,6 +151,7 @@ app.post('/users/:id/:movieTitle', (req, res) => {
 
   if (user) {
     user.favoriteMovies.push(movieTitle);
+    /*res.status(200).json(user);*/ //shows added movie in array
     res.status(200).send(`${movieTitle} has been added to ${user.name}'s array`);
   } else {
     res.status(400).send('No such user found!');
