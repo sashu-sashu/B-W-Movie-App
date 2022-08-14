@@ -2,11 +2,26 @@ const express = require('express');
 const morgan = require('morgan');
 const movieList = require('./public/movie-list.json');
 const uuid = require('uuid');
-const app = express();
+//const app = express();
 
 // error handler
 const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+const app = express();
+
 const methodOverride = require('method-override');
+
+// integrating Mongoose
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+const Directors = Models.Director;
+const Genres = Models.Genre;
+
+mongoose.connect('mongodb://localhost:27017/BW_Movies', { useNewUrlParser: true, useUnifiedTopology: true });
 /*
 app.use(bodyParser.urlencoded({
   extended: true
