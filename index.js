@@ -65,7 +65,7 @@ app.get("/users", (req, res) => {
 
 //return a user by username
 app.get("/users/:Username", (req, res) => {
-  Users.findOne({ Username: req.params.name })
+  Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
     })
@@ -89,7 +89,7 @@ app.get("/movies/:Title", (req, res) => {
 
 //return director information
 app.get("/movies/directors/:Name", (req, res) => {
-  Movies.findOne({ "Director.Name": req.params.name })
+  Movies.findOne({ "Director.Name": req.params.Name })
     .then((movies) => {
       res.json(movies.Director);
     })
@@ -100,10 +100,10 @@ app.get("/movies/directors/:Name", (req, res) => {
 });
 
 //return movies by a specific genre
-app.get("/genre/:Name", (req, res) => {
-  Genres.findOne({Name: req.params.Name})
-  .then((genre) => {
-    res.json(genre.Discription);
+app.get("/movies/genre/:Name", (req, res) => {
+  Movies.findOne({"Genre.Name": req.params.Name})
+  .then((movies) => {
+    res.json(movies.Genre);
   })
   .catch((err) => {
     console.error(err);
@@ -144,12 +144,12 @@ app.put("/users/:Username", (req, res) => {
       $set: {
         Username: req.body.Username,
         Password: req.body.Password,
-        Email: req.body.Birthday,
+        Email: req.body.Email,
         Birthday: req.body.Birthday
       },
     },
     { new: true }, //this line makes sure that the updated doc is
-    (err, updateUser) => {
+    (err, updatedUser) => {
       if (err) {
         console.error(err);
         res.status(500).send("Error: " + err);
@@ -195,7 +195,7 @@ app.delete("/users/:Username", (req, res) => {
 
 //remove a movie from user's favlist
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.name }, {
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
      $pull: { FavoriteMovies: req.params.MovieID }
    },
    { new: true }, // This line makes sure that the updated document is returned
