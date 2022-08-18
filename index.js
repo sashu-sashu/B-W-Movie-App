@@ -58,9 +58,11 @@ const passport = require('passport');
 require('./passport');
 
 
-// GET
+// READ
 //return JSON obj when at /movies
-app.get("/movies", passport.authenticate("jwt", { session: false }), (req, res) => {
+app.get("/movies", 
+//passport.authenticate("jwt", { session: false }), 
+(req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -72,7 +74,9 @@ app.get("/movies", passport.authenticate("jwt", { session: false }), (req, res) 
 });
 
 //return list of all users
-app.get("/users", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get("/users", 
+//passport.authenticate('jwt', { session: false }), 
+(req, res) => {
   Users.find()
   .then((users) => {
     res.status(201).json(users);
@@ -96,7 +100,9 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), (r
 });
 
 //return movie info by a specific title
-app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get("/movies/:Title", 
+//passport.authenticate('jwt', { session: false }), 
+(req, res) => {
   Movies.findOne({Title: req.params.Title})
   .then((movie) => {
     res.json(movie);
@@ -115,7 +121,7 @@ app.get("/movies/directors/:Name",
   Movies.findOne({ "Director.Name": req.params.Name })
     .then((movies) => {
       console.log(req.params);
-      res.json(movies);
+      res.json(movies.Director);
     })
   
     .catch((err) => {
@@ -125,7 +131,9 @@ app.get("/movies/directors/:Name",
 });
 
 //return movies by a specific genre
-app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get("/movies/genre/:Name", 
+//passport.authenticate('jwt', { session: false }), 
+(req, res) => {
   Movies.findOne({"Genre.Name": req.params.Name})
   .then((movies) => {
     res.json(movies.Genre);
@@ -136,7 +144,7 @@ app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }),
   });
 });
 
-//POST
+//UPDATE
 //allow users to register
 app.post("/users", (req, res) => {
   Users.findOne({Username: req.body.Username})
@@ -167,7 +175,9 @@ app.post("/users", (req, res) => {
 });
 
 //allow users to update their user info
-app.put("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put("/users/:Username", 
+//passport.authenticate('jwt', { session: false }), 
+(req, res) => {
   Users.findOneAndUpdate(
     {Username: req.params.Username},
     {
@@ -178,7 +188,7 @@ app.put("/users/:Username", passport.authenticate('jwt', { session: false }), (r
         Birthday: req.body.Birthday
       },
     },
-    { new: true }, //this line makes sure that the updated doc is
+    { new: true }, //this line makes sure that the updated doc is returned
     (err, updatedUser) => {
       if (err) {
         console.error(err);
