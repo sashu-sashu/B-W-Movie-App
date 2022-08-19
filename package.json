@@ -4,14 +4,14 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sashu-sashu/B-W-Movie-App.git"
+    "url": "git+https://github.com/sashu-sashu/bw-movies-server.git"
   },
   "author": "Sasha Tiede",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sashu-sashu/B-W-Movie-App/issues"
+    "url": "https://github.com/sashu-sashu/bw-movies-server/issues"
   },
-  "homepage": "https://github.com/sashu-sashu/B-W-Movie-App#readme",
+  "homepage": "https://github.com/sashu-sashu/bw-movies-server#readme",
   "description": "",
   "scripts": {
     "start": "nodemon index.js"
