@@ -12,7 +12,6 @@ const movieSchema = mongoose.Schema ({
     },
     Duration: String,
     Year: {type: Date, required: true},
-    Duration: String,
     Genre: {
         Name: String,
         Description: String
