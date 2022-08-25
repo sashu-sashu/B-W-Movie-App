@@ -55,9 +55,10 @@ const cors = require('cors');
 app.use(cors());
 
 //with this code certain origins will be given access
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+//let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-app.use(cors({
+
+/*app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
@@ -66,7 +67,7 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));
+}));*/
 
 //Authentication
 const auth = require('./auth')(app);
@@ -84,6 +85,7 @@ app.get('/', (req, res) => {
 app.get("/movies", 
 //passport.authenticate("jwt", { session: false }), 
 (req, res) => {
+  console.log('/movies')
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
