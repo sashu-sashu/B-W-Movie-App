@@ -11,6 +11,11 @@ const morgan = require('morgan');
 //const movieList = require('./public/movie-list.json');
 const uuid = require('uuid');
 const bodyParser = require('body-parser');
+//Authentication
+const auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,29 +55,12 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//must be included before let auth = require('./auth')(app);
 const cors = require('cors');
 app.use(cors());
 
 //with this code certain origins will be given access
 //let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-
-/*app.use(cors({
-  origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}));*/
-
-//Authentication
-const auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
 
 //Routing
 app.get('/', (req, res) => {
@@ -82,8 +70,8 @@ app.get('/', (req, res) => {
 
 // READ
 //return JSON obj when at /movies
-app.get("/movies", 
-//passport.authenticate("jwt", { session: false }), 
+app.get("/movies",
+passport.authenticate("jwt", { session: false }), 
 (req, res) => {
   console.log('/movies')
   Movies.find()
@@ -98,7 +86,7 @@ app.get("/movies",
 
 //return list of all users
 app.get("/users", 
-//passport.authenticate('jwt', { session: false }), 
+passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   Users.find()
   .then((users) => {
