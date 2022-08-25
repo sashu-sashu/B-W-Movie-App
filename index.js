@@ -28,12 +28,15 @@ const mongoose = require('mongoose');
 
 const Models = require('./models/models.js');
 
-const Movies = Models.Movie;
-const Users = Models.User;
+const movies = Models.Movie;
+const users = Models.User;
 
-//mongoose.connect('mongodb://localhost:27017/BW_Movies', { useNewUrlParser: true, useUnifiedTopology: true });
+// if on heroku I use CONNECTION_URI environment variable otherwise the local URI to mongodb serv
+const dbPath = process.env.CONNECTION_URI ? process.env.CONNECTION_URI : 'mongodb://localhost:27017/BW_Movies';
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const dbOptions = process.env.CONNECTION_URI ? { useNewUrlParser: true, useUnifiedTopology: true } : {}
+
+mongoose.connect(dbPath, dbOptions);
 
 // Configure logging file access
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
@@ -71,9 +74,9 @@ app.get('/', (req, res) => {
 // READ
 //return JSON obj when at /movies
 app.get("/movies",
-passport.authenticate("jwt", { session: false }), 
+passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  Movies.find()
+  movies.find()
   .then((movies) => {
     res.status(201).json(movies);
   })
@@ -87,7 +90,7 @@ passport.authenticate("jwt", { session: false }),
 app.get("/users", 
 passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  Users.find()
+  users.find()
   .then((users) => {
     res.status(201).json(users);
   })
@@ -98,8 +101,10 @@ passport.authenticate('jwt', { session: false }),
 });
 
 //return a user by username
-app.get("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOne({ Username: req.params.Username })
+app.get("/users/:Username", 
+passport.authenticate('jwt', { session: false }), 
+(req, res) => {
+  users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
     })
@@ -112,7 +117,7 @@ app.get("/users/:Username", passport.authenticate('jwt', { session: false }), (r
 //return movie info by a specific title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  Movies.findOne({Title: req.params.Title})
+  movies.findOne({Title: req.params.Title})
   .then((movie) => {
     res.json(movie);
   })
@@ -126,7 +131,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }),
 app.get("/movies/directors/:Name", 
 passport.authenticate('jwt', { session: false }),
  (req, res) => {
-  Movies.findOne({ "Director.Name": req.params.Name })
+  movies.findOne({ "Director.Name": req.params.Name })
     .then((movies) => {
       console.log(req.params);
       res.json(movies.Director);
@@ -141,7 +146,7 @@ passport.authenticate('jwt', { session: false }),
 //return movies by a specific genre
 app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  Movies.findOne({"Genre.Name": req.params.Name})
+  movies.findOne({"Genre.Name": req.params.Name})
   .then((movies) => {
     res.json(movies.Genre);
   })
@@ -166,14 +171,14 @@ app.post("/users",
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  const hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+  const hashedPassword = users.hashPassword(req.body.Password);
+  users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
     .then((user) => {
       if (user) {
       //If the user is found, send a response that it already exists
         return res.status(400).send("${req.body.Username} already exists");
       } else {
-        Users
+        users
           .create({
             Username: req.body.Username,
             Password: hashedPassword,
@@ -210,8 +215,8 @@ passport.authenticate('jwt', { session: false }),
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  const hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOneAndUpdate(
+  const hashedPassword = users.hashPassword(req.body.Password);
+  users.findOneAndUpdate(
     {Username: req.params.Username},
     {
       $set: {
@@ -235,8 +240,8 @@ passport.authenticate('jwt', { session: false }),
 
 // add movie to the user's favorite movie list
 app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), (req, res) => {
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
+  let hashedPassword = users.hashPassword(req.body.Password);
+  users.findOneAndUpdate({ Username: req.params.Username }, {
      $push: { FavoriteMovies: req.params.MovieID }
    },
    { new: true }, // This line makes sure that the updated document is returned
@@ -253,7 +258,7 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 //DELETE
 //allow user to deregister
 app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndRemove({Username: req.params.Username})
+  users.findOneAndRemove({Username: req.params.Username})
   .then((user) => {
     if (!user) {
       res.status(400).send(req.params.Username + " was not found ");
@@ -269,7 +274,7 @@ app.delete("/users/:Username", passport.authenticate('jwt', { session: false }),
 
 //remove a movie from user's favlist
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
+  users.findOneAndUpdate({ Username: req.params.Username }, {
      $pull: { FavoriteMovies: req.params.MovieID }
    },
    { new: true }, // This line makes sure that the updated document is returned
