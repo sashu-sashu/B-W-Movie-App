@@ -14,7 +14,7 @@
   "homepage": "https://github.com/sashu-sashu/bw-movies-server#readme",
   "description": "",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "index.js",
     "lint": "eslint ./ --ext .js",
     "lint:fix": "npm run lint -- --fix"
   },
