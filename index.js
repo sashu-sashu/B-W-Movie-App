@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const { check, validationResult } = require('express-validator');
 
 const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+
 //const movieList = require('./public/movie-list.json');
 const uuid = require('uuid');
 const bodyParser = require('body-parser');
@@ -25,7 +26,7 @@ const Models = require('./models/models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-/*mongoose.connect('mongodb://localhost:27017/BW_Movies', { useNewUrlParser: true, useUnifiedTopology: true });*/
+//mongoose.connect('mongodb://localhost:27017/BW_Movies', { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -220,6 +221,7 @@ passport.authenticate('jwt', { session: false }),
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
+  const hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate(
     {Username: req.params.Username},
     {
@@ -243,31 +245,21 @@ passport.authenticate('jwt', { session: false }),
 });
 
 // add movie to the user's favorite movie list
-app.post("/users/:Username/movies/:MovieID", 
-'/users/:Username/favorites/:MovieID',
-  [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
-    check('MovieID', 'MovieID is required').not().isEmpty(),
-    check('MovieID', 'MovieID does not appear to be valid').isMongoId(),
-  ],
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      { $addToSet: { FavoriteMovies: req.params.MovieID } },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send(`Error: ${err}`);
-        } else {
-          res.json(updatedUser);
-        }
-      },
-    );
-  },
-);
+app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
+     $push: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error:  + ${err}");
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
 
 //DELETE
 //allow user to deregister
