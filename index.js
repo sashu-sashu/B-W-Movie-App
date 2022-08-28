@@ -1,79 +1,54 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const app = express();
-const { check, validationResult } = require('express-validator');
+const express = require('express'),
+  fs = require('fs'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid');
 
 const morgan = require('morgan');
-
-//const movieList = require('./public/movie-list.json');
-const uuid = require('uuid');
-const bodyParser = require('body-parser');
-//Authentication
-const auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-const methodOverride = require('method-override');
-
-// integrating Mongoose
+const app = express();
 const mongoose = require('mongoose');
+const model = require('./models/models.js');
 
-const Models = require('./models/models.js');
+const movies = model.Movie;
+const users = model.User;
 
-const movies = Models.Movie;
-const users = Models.User;
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
+//   if (err) throw err;
+//   console.log('Connected to MongoDB!!!');
+// });
 
-// if on heroku I use CONNECTION_URI environment variable otherwise the local URI to mongodb serv
-const dbPath = process.env.CONNECTION_URI ? process.env.CONNECTION_URI : 'mongodb://localhost:27017/BW_Movies';
+mongoose.connect(process.env.CONNECTION_URI, (err) => {
+  if (err) throw err;
+  console.log('Connected to MongoDB!!!');
+});
 
-const dbOptions = process.env.CONNECTION_URI ? { useNewUrlParser: true, useUnifiedTopology: true } : {}
-
-mongoose.connect(dbPath, dbOptions);
-
-// Configure logging file access
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
 
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(bodyParser.json());
-app.use(methodOverride());
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-app.use(morgan('common'));
-app.use(express.static('public')); // function for static files
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
+const { check, validationResult } = require('express-validator');
+
 app.use(cors());
 
-//with this code certain origins will be given access
-//let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 
 //Routing
 app.get('/', (req, res) => {
-  res.sendFile('/index.html', { root: __dirname });
+  res.send('Welcome to Top 10 BW Movies!');
 });
 
 
 // READ
 //return JSON obj when at /movies
-app.get("/movies",
+app.get('/movies',
 passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   movies.find()
@@ -82,13 +57,13 @@ passport.authenticate('jwt', { session: false }),
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send("Error:  + ${err}");
+    res.status(500).send('Error:  + ${err}');
   });
 });
 
 //return list of all users
-app.get("/users", 
-passport.authenticate('jwt', { session: false }), 
+app.get('/users', 
+//passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   users.find()
   .then((users) => {
@@ -96,12 +71,12 @@ passport.authenticate('jwt', { session: false }),
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send("Error:  + ${err}");
+    res.status(500).send('Error:  + ${err}');
   });
 });
 
 //return a user by username
-app.get("/users/:Username", 
+app.get('/users/:Username', 
 passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   users.findOne({ Username: req.params.Username })
@@ -110,12 +85,12 @@ passport.authenticate('jwt', { session: false }),
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Error:  + ${err}");
+      res.status(500).send('Error:  + ${err}');
     });
 });
 
 //return movie info by a specific title
-app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), 
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   movies.findOne({Title: req.params.Title})
   .then((movie) => {
@@ -123,15 +98,15 @@ app.get("/movies/:Title", passport.authenticate('jwt', { session: false }),
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send("Error: " + err);
+    res.status(500).send('Error: ' + err);
   });
 });
 
 //return director information
-app.get("/movies/directors/:Name", 
+app.get('/movies/directors/:Name', 
 passport.authenticate('jwt', { session: false }),
  (req, res) => {
-  movies.findOne({ "Director.Name": req.params.Name })
+  movies.findOne({ 'Director.Name': req.params.Name })
     .then((movies) => {
       console.log(req.params);
       res.json(movies.Director);
@@ -139,26 +114,26 @@ passport.authenticate('jwt', { session: false }),
   
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Error:  + ${err}");
+      res.status(500).send('Error:  + ${err}');
     });
 });
 
 //return movies by a specific genre
-app.get("/movies/genre/:Name", passport.authenticate('jwt', { session: false }), 
+app.get('/movies/genre/:Name', passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  movies.findOne({"Genre.Name": req.params.Name})
+  movies.findOne({'Genre.Name': req.params.Name})
   .then((movies) => {
     res.json(movies.Genre);
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).send("Error:  + ${err}");
+    res.status(500).send('Error:  + ${err}');
   });
 });
 
 //UPDATE
 //allow users to register
-app.post("/users", 
+app.post('/users', 
 [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
@@ -176,7 +151,7 @@ app.post("/users",
     .then((user) => {
       if (user) {
       //If the user is found, send a response that it already exists
-        return res.status(400).send("${req.body.Username} already exists");
+        return res.status(400).send('${req.body.Username} already exists');
       } else {
         users
           .create({
@@ -188,13 +163,13 @@ app.post("/users",
           .then((createdUser) => { res.status(201).json(createdUser) })
           .catch((error) => {
             console.error(error);
-            res.status(500).send("Error:  + ${err}");
+            res.status(500).send('Error:  + ${err}');
           });
       }
     })
     .catch((error) => {
       console.error(error);
-      res.status(500).send("Error:  + ${err}");
+      res.status(500).send('Error:  + ${err}');
     });
 });
 
@@ -202,7 +177,7 @@ app.post("/users",
 
 
 //allow users to update their user info
-app.put("/users/:Username", 
+app.put('/users/:Username', 
 [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
@@ -211,17 +186,17 @@ app.put("/users/:Username",
 ],
 passport.authenticate('jwt', { session: false }), 
 (req, res) => {
-  const errors = validationResult(req);
+  let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  const hashedPassword = users.hashPassword(req.body.Password);
+  let hashedPassword = users.hashPassword(req.body.Password);
   users.findOneAndUpdate(
     {Username: req.params.Username},
     {
       $set: {
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       },
@@ -230,7 +205,7 @@ passport.authenticate('jwt', { session: false }),
     (err, updatedUser) => {
       if (err) {
         console.error(err);
-        res.status(500).send("Error:  + ${err}");
+        res.status(500).send('Error:  + ${err}');
       } else {
         res.json(updatedUser);
       }
@@ -239,7 +214,7 @@ passport.authenticate('jwt', { session: false }),
 });
 
 // add movie to the user's favorite movie list
-app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   let hashedPassword = users.hashPassword(req.body.Password);
   users.findOneAndUpdate({ Username: req.params.Username }, {
      $push: { FavoriteMovies: req.params.MovieID }
@@ -248,7 +223,7 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
   (err, updatedUser) => {
     if (err) {
       console.error(err);
-      res.status(500).send("Error:  + ${err}");
+      res.status(500).send('Error:  + ${err}');
     } else {
       res.json(updatedUser);
     }
@@ -257,18 +232,18 @@ app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', { sess
 
 //DELETE
 //allow user to deregister
-app.delete("/users/:Username", passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   users.findOneAndRemove({Username: req.params.Username})
   .then((user) => {
     if (!user) {
-      res.status(400).send(req.params.Username + " was not found ");
+      res.status(400).send(req.params.Username + ' was not found ');
     } else {
-      res.status(200).send(req.params.Username + " was deleted ");
+      res.status(200).send(req.params.Username + ' was deleted ');
     }
   })  
   .catch((err) => {
     console.error(err);
-    res.status(500).send("Error:  + ${err}");
+    res.status(500).send('Error:  + ${err}');
   });
 });
 
@@ -281,7 +256,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
   (err, updatedUser) => {
     if (err) {
       console.error(err);
-      res.status(500).send("Error:  + ${err}");
+      res.status(500).send('Error:  + ${err}');
     } else {
       res.json(updatedUser);
     }
