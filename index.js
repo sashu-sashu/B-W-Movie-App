@@ -43,8 +43,7 @@ app.get('/', (req, res) => {
 
 // READ
 //return JSON obj when at /movies
-app.get('/movies',
-//3.4 Task!!! temporary passport.authenticate('jwt', { session: false }), 
+app.get('/movies', ('jwt', { session: false }), 
 (req, res) => {
   movies.find()
   .then((movies) => {
