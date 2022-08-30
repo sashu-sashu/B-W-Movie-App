@@ -43,7 +43,8 @@ app.get('/', (req, res) => {
 
 // READ
 //return JSON obj when at /movies
-app.get('/movies', ('jwt', { session: false }), 
+app.get('/movies', 
+//('jwt', { session: false }), 
 (req, res) => {
   movies.find()
   .then((movies) => {
