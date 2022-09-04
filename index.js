@@ -58,7 +58,7 @@ app.get('/movies',
 
 //return list of all users
 app.get('/users', 
-//passport.authenticate('jwt', { session: false }), 
+passport.authenticate('jwt', { session: false }), 
 (req, res) => {
   users.find()
   .then((users) => {
