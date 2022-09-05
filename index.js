@@ -9,7 +9,7 @@ const app = express();
 const mongoose = require('mongoose');
 const model = require('./models/models.js');
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://bw-movies.netlify.app/'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://bw-movies.netlify.app'];
 
 const movies = model.Movie;
 const users = model.User;
