@@ -8,6 +8,8 @@ const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
 const model = require('./models/models.js');
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234'];
 
 const movies = model.Movie;
 const users = model.User;
